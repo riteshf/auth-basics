@@ -22,3 +22,10 @@ userSchema.methods.checkPassword = function (password) {
 const User = mongoose.model("user", userSchema);
 
 module.exports = User;
+
+fetch("url", {
+  method: "GET",
+  headers: {
+    accesstoken: localStorage.getItem("accesstoken"),
+  },
+});
