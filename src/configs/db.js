@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
 
 module.exports = () => {
-  return mongoose.connect("mongodb://localhost:27017/pt2-authentication");
+  return mongoose.connect(process.env.MONGOOSE_DB_URL);
 };

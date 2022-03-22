@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 
 const connect = require("./configs/db");
@@ -9,10 +10,10 @@ app.use(express.json());
 app.use("/users", userController);
 app.use("/products", productController);
 
-app.listen(8000, async () => {
+app.listen(process.env.PORT, async () => {
   try {
     await connect();
-    console.log("Running on PORT: ", 8000);
+    console.log("Running on PORT: ", process.env.PORT);
   } catch (e) {
     console.log(e.message);
   }
