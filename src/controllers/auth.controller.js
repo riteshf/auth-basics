@@ -29,9 +29,23 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
-    return res.status(200).json("login user");
+    // 1. does user exists
+    let user = await User.findOne({ email: req.body.email });
+    // 2. if does not then return 400
+    if (!user) {
+      return res.status(400).json("User email or password is incorrect");
+    }
+    // 3. if exists then check if password is matching
+    const matching = user.checkPassword(req.body.password);
+    // 4. if not matching then throw 400
+    if (!matching) {
+      return res.status(400).json("User email or password is incorrect");
+    }
+    // 5. if matching then give him the token
+    let token = newToken(user);
+    return res.status(200).json({ token });
   } catch (err) {
     return res.status(500).json({ status: "failed", message: err.message });
   }
